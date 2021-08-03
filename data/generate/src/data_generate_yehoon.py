@@ -408,3 +408,5 @@ no_slot_data = pd.read_table('../resources/no_slot_data.txt', sep='\n', header=N
 
 for sentence in no_slot_data:
     sentences.append(sentence)
+    
+return sentences
