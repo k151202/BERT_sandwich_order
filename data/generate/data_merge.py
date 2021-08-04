@@ -1,4 +1,4 @@
-import scr.data_generate_yehoon as yh
+import src.data_generate_yehoon as yh
 
 data = []
 
