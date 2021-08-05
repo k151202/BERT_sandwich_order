@@ -169,11 +169,7 @@ class Generator:
 
         ## 빵, 샌드위치, 치즈
         for cheese in self.menu['cheese']:
-            predicate = '으로 할게요.'
-            if has_coda(cheese):
-                # 받침 없는 경우
-                predicate = '로 할게요.'
-            order = '치즈는 '+'/cheese;'+cheese+'/'+predicate
+            order = '치즈는 '+'/cheese;'+cheese+'/'+fit('으로 할게요.',cheese)
             
             # "{빵}에 {샌드위치} 해주시고, 치즈는 {치즈}(으)로 할게요."
             for x in self.gen_pre_bread_sandwich():
@@ -187,10 +183,7 @@ class Generator:
 
         for cheese in self.menu['cheese']:
             predicate = '으로 할게요.'
-            if has_coda(cheese):
-                # 받침 없는 경우
-                predicate = '로 할게요.'
-            order = '치즈는 '+'/cheese;'+cheese+'/'+predicate
+            order = '치즈는 '+'/cheese;'+cheese+'/'+fit('으로 할게요.',cheese)
 
             # "{길이} {빵}에 {샌드위치} 해주시고, 치즈는 {치즈}로 할게요."
             for x in self.gen_pre_bread_sandwich():
