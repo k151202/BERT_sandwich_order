@@ -89,7 +89,6 @@ s_ch = f'{random.choice(chee)} /cheese;{random.choice(cheese)}/ {random.choice(c
 s_ev = f'{random.choice(vege)} /vegetable;{random.choice(vegtable)}/ {random.choice(exclude)} '
 s_sa = f'{random.choice(sauc)} /sauce;{random.choice(sauce)}/ {random.choice(cont)} '
 lists=[s_l,s_s,s_b,s_ch,s_ev,s_sa]
-print(lists)
 
 
 #사용 함수들
@@ -102,6 +101,7 @@ def Random_eliminate():
             a = random.randint(0,5)
         exlist.append(a)
     return exlist
+
 #2d to 1d
 def flatten(input):
     flat = []
@@ -125,4 +125,3 @@ def gen_data() :
     return data
 
 gen_data
-print(data)
