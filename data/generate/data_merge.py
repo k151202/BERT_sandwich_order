@@ -15,6 +15,8 @@ data.extend(th.gen_data())
 data.extend(jh.gen_data())
 data.extend(ch.gen_data())
 
-print(len(data))
-print(data[:5])
-print(data[-3:])
+data = set(data)
+
+with open("data/seq/resources/data.txt", "w", encoding="utf-8") as f:
+  for sentence in data:
+    f.write(sentence+"\n")

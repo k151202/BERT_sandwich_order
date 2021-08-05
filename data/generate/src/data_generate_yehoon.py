@@ -13,7 +13,7 @@ def gen_data():
     sentences = generator.generate()
 
     # 슬롯 없는 문장
-    no_slot_data = pd.read_table('resources/no_slot_data.txt', sep='\n', header=None)
+    no_slot_data = pd.read_table('data/generate/resources/no_slot_data.txt', sep='\n', header=None)
     sentences.extend(list(no_slot_data[0]))
 
     return sentences
@@ -410,7 +410,7 @@ kor_keys = ['샌드위치','길이','치즈','빵','채소','소스']
 def get_menu():
     # 슬롯이 담을 수 있는 내용을 슬롯 이름에 맞게 튜플로 변수 생성 
     for key, kor_key in zip(keys,kor_keys):
-        exec("%s = tuple(pd.read_csv('resources/%s.csv'))"%(key,kor_key))
+        exec("%s = tuple(pd.read_csv('data/generate/resources/%s.csv'))"%(key,kor_key))
 
     # 슬롯의 이름을 key 값, 슬롯의 내용을 튜플로 value 값으로 가지는 menu 사전 생성
     menu = {}

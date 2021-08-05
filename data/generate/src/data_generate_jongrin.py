@@ -84,7 +84,6 @@ top = ['','토핑은','추가토핑은','추가 토핑은']
 s_l = f'{random.choice(leng)} /length;{random.choice(length)}/ {random.choice(cont)} '
 s_s = f'{random.choice(sand)} /sandwich;{random.choice(sandwich)}/ {random.choice(cont)} '
 s_b = f'{random.choice(brea)} /bread;{random.choice(bread)}/ {random.choice(cont)} '
-#s_at = f'{random.choice(top)} /add_toping;{random.choice(add_topping)}/ {random.choice(together)}'
 s_ch = f'{random.choice(chee)} /cheese;{random.choice(cheese)}/ {random.choice(cont)} '
 s_ev = f'{random.choice(vege)} /vegetable;{random.choice(vegtable)}/ {random.choice(exclude)} '
 s_sa = f'{random.choice(sauc)} /sauce;{random.choice(sauce)}/ {random.choice(cont)} '
@@ -123,5 +122,3 @@ def gen_data() :
             for j in range(0,len(list_ect)):
                 data.append(list_ect[j])
     return data
-
-gen_data
