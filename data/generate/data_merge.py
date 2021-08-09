@@ -5,18 +5,21 @@ import src.data_generate_taehyung as th
 import src.data_generate_jihun as jh
 import src.data_generate_changhun as ch
 
+def main():
+  data = []
 
-data = []
+  data.extend(yh.gen_data())
+  data.extend(jm.gen_data())
+  data.extend(jr.gen_data())
+  data.extend(th.gen_data())
+  data.extend(jh.gen_data())
+  data.extend(ch.gen_data())
 
-data.extend(yh.gen_data())
-data.extend(jm.gen_data())
-data.extend(jr.gen_data())
-data.extend(th.gen_data())
-data.extend(jh.gen_data())
-data.extend(ch.gen_data())
+  data = set(data)
 
-data = set(data)
+  with open("data/seq/resources/data.txt", "w", encoding="utf-8") as f:
+    for sentence in data:
+      f.write(sentence+"\n")
 
-with open("data/seq/resources/data.txt", "w", encoding="utf-8") as f:
-  for sentence in data:
-    f.write(sentence+"\n")
+if __name__ == "__main__":
+  main()
