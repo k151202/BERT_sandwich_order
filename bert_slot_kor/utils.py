@@ -23,7 +23,7 @@ class Reader:
 
         with open(os.path.join(dataset_folder_path,"seq_out.txt"), "r") as f:
             for line in f.readlines():
-                text_arr.append(line.split())
+                tags_arr.append(line.split())
 
         assert len(text_arr) == len(tags_arr)
         return text_arr, tags_arr
