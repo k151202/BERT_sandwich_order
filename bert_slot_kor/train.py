@@ -89,13 +89,22 @@ if __name__ == "__main__":
     print("train_tags :", train_tags.shape, train_tags[0:2])
     
     if val_data_folder_path:
-
-    ############################### TODO ###############################
         # validation data 불러오기
-        # train set과 validation set을 둘 다 넣어서 model.fit 하기
         print("reading validation set")
+        val_text_arr, val_tags_arr = Reader.read(val_data_folder_path)
+        v_input_ids, v_input_mask, v_segment_ids = bert_to_array.transform(val_text_arr)
+
+        tags_to_array = TagsToArray()
+        tags_to_array.fit(val_tags_arr)
+        val_tags = tags_to_array.transform(val_tags_arr, v_input_ids)
+
+        # train set과 validation set을 둘 다 넣어서 model.fit 하기
         print("training model ...")
-    ####################################################################
+        model.fit([t_input_ids, t_input_mask, t_segment_ids],
+                  train_tags,
+                  validation_data=([v_input_ids, v_input_mask, v_segment_ids],
+                  val_tags),
+                  epochs=epochs, batch_size=batch_size)
 
     else:
         print("training model ...")
@@ -111,7 +120,7 @@ if __name__ == "__main__":
         print("Folder `%s` created" % save_folder_path)
     model.save(save_folder_path)
     tags_to_array_path = os.path.join(load_folder_path, "tags_to_array.pkl")
-    with open(os.path.join(tags_to_array_path, "wb") as handle:
+    with open(os.path.join(tags_to_array_path, "wb")) as handle:
         pickle.dump(tags_to_array, handle, protocol=pickle.HIGHEST_PROTOCOL)
     
     tf.compat.v1.reset_default_graph()
