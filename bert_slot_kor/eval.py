@@ -9,9 +9,30 @@ from sklearn import metrics
 
 from utils import Reader
 from to_array.bert_to_array import BERTToArray
+from to_array.tags_to_array import TagsToArray
 from models.bert_slot_model import BertSlotModel
 from utils import flatten
 
+def get_results(input_ids, input_mask, segment_ids, tags_arr, tags_to_array):
+    inferred_tags, slots_score = model.predict_slots([input_ids,
+                                                      input_mask,
+                                                      segment_ids],
+                                                     tags_to_array)
+    gold_tags = [x.split() for x in tags_arr]
+
+    f1_score = metrics.f1_score(flatten(gold_tags), flatten(inferred_tags),
+                                average="micro")
+
+    tag_incorrect = ""
+    for i, sent in enumerate(input_ids):
+        if inferred_tags[i] != gold_tags[i]:
+            tokens = bert_to_array.tokenizer.convert_ids_to_tokens(input_ids[i])
+            tag_incorrect += "sent {}\n".format(tokens)
+            tag_incorrect += ("pred: {}\n".format(inferred_tags[i]))
+            tag_incorrect += ("score: {}\n".format(slots_score[i]))
+            tag_incorrect += ("ansr: {}\n\n".format(gold_tags[i]))
+
+    return f1_score, tag_incorrect
 
 if __name__ == "__main__":
     # Reads command-line parameters
@@ -59,30 +80,14 @@ if __name__ == "__main__":
         
     model = BertSlotModel.load(load_folder_path, sess)
     
-    #################################### TODO #############################
     # test set 데이터 불러오기
-    ########################################################################
-    
-def get_results(input_ids, input_mask, segment_ids, tags_arr, tags_to_array):
-    inferred_tags, slots_score = model.predict_slots([input_ids,
-                                                      input_mask,
-                                                      segment_ids],
-                                                     tags_to_array)
-    gold_tags = [x.split() for x in tags_arr]
+    print("reading test set")
+    test_text_arr, test_tags_arr = Reader.read(data_folder_path)
+    input_ids, input_mask, segment_ids = bert_to_array.transform(test_text_arr)
 
-    f1_score = metrics.f1_score(flatten(gold_tags), flatten(inferred_tags),
-                                average="micro")
-
-    tag_incorrect = ""
-    for i, sent in enumerate(input_ids):
-        if inferred_tags[i] != gold_tags[i]:
-            tokens = bert_to_array.tokenizer.convert_ids_to_tokens(input_ids[i])
-            tag_incorrect += "sent {}\n".format(tokens)
-            tag_incorrect += ("pred: {}\n".format(inferred_tags[i]))
-            tag_incorrect += ("score: {}\n".format(slots_score[i]))
-            tag_incorrect += ("ansr: {}\n\n".format(gold_tags[i]))
-
-    return f1_score, tag_incorrect
+    tags_to_array = TagsToArray()
+    tags_to_array.fit(test_tags_arr)
+    data_tags_arr = tags_to_array.transform(test_tags_arr, input_ids)
 
     f1_score, tag_incorrect = get_results(input_ids, input_mask,
                                           segment_ids, data_tags_arr,
@@ -102,3 +107,4 @@ def get_results(input_ids, input_mask, segment_ids, tags_arr, tags_to_array):
     
     tf.compat.v1.reset_default_graph()
     print("complete")
+    

@@ -1,2 +1,5 @@
 # BERT_sandwich_order
-Sandwich order system using slot tagging model with BERT
+
+## BERT를 이용한 샌드위치 주문 챗봇 구현 프로젝트
+
+- 슬롯태깅 모델을 이용해서 샌드위치 주문 챗봇을 구현하는 프로젝트입니다.

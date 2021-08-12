@@ -20,43 +20,48 @@
    - 인자값(training set, validation set의 경로, 훈련된 모델을 저장할 경로, epoch 수, 배치사이즈)
    - 입력받은 인자값은 args에 저장된다.
    - 예시)
-   - `python3 train.py --target=/data/seq/resources/seq_in_train.txt --val=/data/seq/resources/seq_in_valid.txt --save=/saved_model_path --epochs=50 --batch=10`
+   - `python3 train.py -t /data/seq/resources/seq_in_train.txt -v /data/seq/resources/seq_in_valid.txt -s /saved_model_path -e 50 -bs 10`
 
 4. 모델 평가
 
    - 훈련된 모델과 데이터의 경로를 입력해서 모델을 평가한다.
    - 예시)
-   - `python3 eval.py --model=load_folder_path --data=data_folder_path`
+   - `python3 eval.py -m /load_folder_path -d /data_folder_path`
    - 테스트의 결과는 --model에 넣어준 모델 경로 아래의 `test_results`에 저장된다.
 
 5. Inference (임의의 문장을 모델에 넣어보기)
-   - TODO - `eval_bert_finetuned.py`를 참고하여 한 문장씩 넣어서 모델이 내뱉는 결과물을 볼 수 있도록 inference.py 코드를 완성하세요.
+
    - `python inference.py --model {훈련된 모델이 저장된 경로}`
    - 예시: `python inference.py --model saved_model/`
    - 모델 자체가 용량이 커서 불러오는 데까지 시간이 걸림
    - "Enter your sentence:"라는 문구가 나오면 모델에 넣어보고 싶은 문장을 넣어 주면 됨
-   - quit라는 입력을 넣어 주면 종료  
+   - quit라는 입력을 넣어 주면 종료
 
 ## Check List
 
-eval.py  
- - [ ] 경로 고치기  
- - [x] test set 데이터 불러오기  
+eval.py
 
-inference.py  
- - [ ] 필요한 모듈 불러오기  
- - [ ] 경로 고치기  
- - [ ] 모델과 기타 필요한 것들 불러오기  
- - [ ] 사용자가 입력한 한 문장을 슬롯태깅 모델에 넣어서 결과 뽑아내기  
+- [ ] 경로 고치기
+- [x] test set 데이터 불러오기
 
-train.py  
- - [ ] 경로 고치기  
- - [x] validation data 불러오기  
- - [x] train set과 validation set을 둘 다 넣어서 model.fit 하기  
+inference.py
 
-utils.py  
- - [x] seq.in과 seq.out을 읽어들여서 리스트로 만들기  
- 
-models/bert_slot_model.py  
- - [ ] y_slots를 이용하여 slots_score를 만들기  
- - [ ] history_dict에 기록된 loss 변화 추이를 이미지로 저장하는 함수 만들기  
+- [ ] 필요한 모듈 불러오기
+- [ ] 경로 고치기
+- [ ] 모델과 기타 필요한 것들 불러오기
+- [ ] 사용자가 입력한 한 문장을 슬롯태깅 모델에 넣어서 결과 뽑아내기
+
+train.py
+
+- [ ] 경로 고치기
+- [x] validation data 불러오기
+- [x] train set과 validation set을 둘 다 넣어서 model.fit 하기
+
+utils.py
+
+- [x] seq.in과 seq.out을 읽어들여서 리스트로 만들기
+
+models/bert_slot_model.py
+
+- [ ] y_slots를 이용하여 slots_score를 만들기
+- [ ] history_dict에 기록된 loss 변화 추이를 이미지로 저장하는 함수 만들기
