@@ -35,4 +35,28 @@
    - 예시: `python inference.py --model saved_model/`
    - 모델 자체가 용량이 커서 불러오는 데까지 시간이 걸림
    - "Enter your sentence:"라는 문구가 나오면 모델에 넣어보고 싶은 문장을 넣어 주면 됨
-   - quit라는 입력을 넣어 주면 종료
+   - quit라는 입력을 넣어 주면 종료  
+
+## Check List
+
+eval.py  
+ - [ ] 경로 고치기  
+ - [x] test set 데이터 불러오기  
+
+inference.py  
+ - [ ] 필요한 모듈 불러오기  
+ - [ ] 경로 고치기  
+ - [ ] 모델과 기타 필요한 것들 불러오기  
+ - [ ] 사용자가 입력한 한 문장을 슬롯태깅 모델에 넣어서 결과 뽑아내기  
+
+train.py  
+ - [ ] 경로 고치기  
+ - [x] validation data 불러오기  
+ - [x] train set과 validation set을 둘 다 넣어서 model.fit 하기  
+
+utils.py  
+ - [x] seq.in과 seq.out을 읽어들여서 리스트로 만들기  
+ 
+models/bert_slot_model.py  
+ - [ ] y_slots를 이용하여 slots_score를 만들기  
+ - [ ] history_dict에 기록된 loss 변화 추이를 이미지로 저장하는 함수 만들기  
