@@ -50,7 +50,6 @@ inference.py
 - [ ] 경로 고치기
 - [x] 모델과 기타 필요한 것들 불러오기
 - [x] 사용자가 입력한 한 문장을 슬롯태깅 모델에 넣어서 결과 뽑아내기
-- [ ] FullTokenizer의 vocab_file 경로 채우기
 
 train.py
 
