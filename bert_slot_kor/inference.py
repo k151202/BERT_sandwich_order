@@ -6,7 +6,6 @@ import argparse
 
 # 필요한 모듈 불러오기 
 from to_array.bert_to_array import BERTToArray
-from to_array.tokenizationK import FullTokenizer
 from models.bert_slot_model import BertSlotModel
 
 import tensorflow as tf
@@ -67,10 +66,7 @@ if __name__ == "__main__":
             break
     
     # 사용자가 입력한 한 문장을 슬롯태깅 모델에 넣어서 결과 뽑아내기
-    ################# TODO vocab_file 경로 채우기 ###########################
-    tokenizer = FullTokenizer(vocab_file="")
-    ########################################################################
-    text_arr = tokenizer.tokenize(input_text)
+    text_arr = bert_to_array.tokenizer.tokenize(input_text)
 
     input_ids, input_mask, segment_ids = bert_to_array.transform(text_arr)
     
