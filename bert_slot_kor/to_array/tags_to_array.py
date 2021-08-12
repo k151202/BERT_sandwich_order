@@ -23,7 +23,7 @@ class TagsToArray:
         seq_length = input_ids.shape[1]
 
         data = self.tokenize(tags_str_arr)
-        data = [self.label_encoder.transform(['O'] + x + ['O']).astype(np.int32) for x in data]
+        data = [self.label_encoder.transform(['0'] + x + ['0']).astype(np.int32) for x in data]
         data = np.array(data)
         output = np.zeros((len(data), seq_length))
         
