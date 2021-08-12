@@ -42,4 +42,4 @@
 `data/seq`에 `data_to_seq.py`를 실행하면, `seq_in.txt`과 `seq_out.txt`가 'data/seq/resources'에 생성됨.
 
 ### 3. 파인튜닝
-> 진
+> 진행중
