@@ -36,10 +36,10 @@
 
 ## 실행 방법
 ### 1. 데이터 생성
-`data/generate`에 `data_merge.py`를 실행하면, `data.txt`가 'data/seq/resources'에 생성됨.
+`data/generate`에 `data_merge.py`를 실행하면, `data.txt`가 `data/seq/resources`에 생성됨.
 
 ### 2. 데이터 전처리
 `data/seq`에 `data_to_seq.py`를 실행하면, `seq_in.txt`과 `seq_out.txt`가 'data/seq/resources'에 생성됨.
 
 ### 3. 파인튜닝
-> 진
+> 진행중
