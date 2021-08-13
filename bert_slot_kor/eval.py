@@ -18,7 +18,7 @@ def get_results(input_ids, input_mask, segment_ids, tags_arr, tags_to_array):
                                                       input_mask,
                                                       segment_ids],
                                                      tags_to_array)
-    gold_tags = [x.split() for x in tags_arr]
+    gold_tags = [list(x[1:-1]) for x in tags_arr]
 
     f1_score = metrics.f1_score(flatten(gold_tags), flatten(inferred_tags),
                                 average="micro")
