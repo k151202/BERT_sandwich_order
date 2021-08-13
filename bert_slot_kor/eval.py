@@ -18,7 +18,10 @@ def get_results(input_ids, input_mask, segment_ids, tags_arr, tags_to_array):
                                                       input_mask,
                                                       segment_ids],
                                                      tags_to_array)
-    gold_tags = [x.split() for x in tags_arr]
+    
+    # tags_arr 를 np.ndarray 에서 list 형태로 변환 (flatten 적용하기 위해)
+    # 문장 앞 뒤에 문장과 시작을 알리는 태그 제거 (metrics.f1_score 적용하기 위해 개수 맞춤)
+    gold_tags = [list(x[1:-1]) for x in tags_arr]
 
     f1_score = metrics.f1_score(flatten(gold_tags), flatten(inferred_tags),
                                 average="micro")
