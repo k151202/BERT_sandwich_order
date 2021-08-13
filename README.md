@@ -31,7 +31,10 @@
     - KoBert의 파인튜닝 사용
 
 ## 의존성
-`tensorflow == 1.15` 
+```
+tensorflow == 1.15 
+h5py == 2.10.0
+```
 
 
 ## 실행 방법
@@ -39,7 +42,7 @@
 `data/generate`에 `data_merge.py`를 실행하면, `data.txt`가 `data/seq/resources`에 생성됨.
 
 ### 2. 데이터 전처리
-`data/seq`에 `data_to_seq.py`를 실행하면, `seq_in.txt`과 `seq_out.txt`가 'data/seq/resources'에 생성됨.
+`data/seq`에 `data_to_seq.py`를 실행하면, `seq_in.txt`과 `seq_out.txt`가 `data/seq/resources`에 생성됨.
 
 ### 3. 파인튜닝
 > 진행중
