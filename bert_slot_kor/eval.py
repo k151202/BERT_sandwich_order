@@ -14,15 +14,24 @@ from models.bert_slot_model import BertSlotModel
 from utils import flatten
 
 def get_results(input_ids, input_mask, segment_ids, tags_arr, tags_to_array):
+    print("predicting...")
     inferred_tags, slots_score = model.predict_slots([input_ids,
                                                       input_mask,
                                                       segment_ids],
                                                      tags_to_array)
     
-    # tags_arr 를 np.ndarray 에서 list 형태로 변환 (flatten 적용하기 위해)
-    # 문장 앞 뒤에 문장과 시작을 알리는 태그 제거 (metrics.f1_score 적용하기 위해 개수 맞춤)
-    gold_tags = [list(x[1:-1]) for x in tags_arr]
+    print("create gold tags...")
+    gold_tags = [x.split() for x in tags_arr]
+    temp = len(inferred_tags[0])
+    print("padding gold tags...")
+    gold_tags = [x + ['0'] * (temp - len(x)) for x in gold_tags]
 
+    #print("\ngold tags")
+    #print(*gold_tags[:2], sep="\n")
+    #print("\ninferred tags")
+    #print(*inferred_tags[:2], sep="\n")
+
+    print("getting f1 score...")
     f1_score = metrics.f1_score(flatten(gold_tags), flatten(inferred_tags),
                                 average="micro")
 
@@ -85,15 +94,11 @@ if __name__ == "__main__":
     
     # test set 데이터 불러오기
     print("reading test set")
-    test_text_arr, test_tags_arr = Reader.read(data_folder_path)
-    input_ids, input_mask, segment_ids = bert_to_array.transform(test_text_arr)
-
-    tags_to_array = TagsToArray()
-    tags_to_array.fit(test_tags_arr)
-    data_tags_arr = tags_to_array.transform(test_tags_arr, input_ids)
+    text_arr, tags_arr = Reader.read(data_folder_path)
+    input_ids, input_mask, segment_ids = bert_to_array.transform(text_arr)
 
     f1_score, tag_incorrect = get_results(input_ids, input_mask,
-                                          segment_ids, data_tags_arr,
+                                          segment_ids, tags_arr,
                                           tags_to_array)
     
     # 테스트 결과를 모델 디렉토리의 하위 test_results에 저장해 준다.
