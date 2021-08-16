@@ -63,5 +63,5 @@ utils.py
 
 models/bert_slot_model.py
 
-- [ ] y_slots를 이용하여 slots_score를 만들기
+- [x] y_slots를 이용하여 slots_score를 만들기
 - [ ] history_dict에 기록된 loss 변화 추이를 이미지로 저장하는 함수 만들기
