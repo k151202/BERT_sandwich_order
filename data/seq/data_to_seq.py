@@ -7,7 +7,8 @@ def main():
     seq_in = []
     seq_out = []
 
-    tokenizer = src.tokenizationK.FullTokenizer(vocab_file = "data\seq\resources\vocab.korean.rawtext.list")
+    # ETRI에서 받은 /004_bert_eojeol_tensorflow/ 에 vocab.korean.rawtext.list 사용
+    tokenizer = src.tokenizationK.FullTokenizer(vocab_file = "vocab.korean.rawtext.list")
 
     with open("data/seq/resources/data.txt", "r", encoding="utf-8") as f:
         for sentence in f.readlines():
