@@ -65,7 +65,13 @@ def home():
         # "topping": None,
     }
     # 점수제한
-    app.score_limit = 0.8
+    app.score_limit = 0.8    
+    
+    # 변수 
+    app.ask_veg = False
+    app.confirm_veg = False
+    app.ask_sauce = False
+    app.confirm_sauce = False
 
     return render_template("index.html")
 
@@ -206,7 +212,25 @@ def get_bot_response():
     # empty_slot -> 비어있는 메뉴의 리스트
     empty_slot = [menu[k] for k, v in app.slot_dict.items() if app.slot_dict[k] == None]
 
-    if empty_slot:
+    # 채소 슬롯이 비었을 때
+    if "제외할 채소" in empty_slot:
+      if not app.ask_veg:
+        message = "안 드시는 채소를 선택해주세요."
+        app.ask_veg = True
+      else:
+        if not app.confirm_veg:
+          message = "선택한 채소가 없습니다. 채소는 다 넣어드릴까요?\n(예/아니오)"
+          app.confirm_veg = True
+        else:
+          if userText.strip() == "예":
+              message = f"""
+              채소는 다 넣어드리겠습니다.
+              {", ".join(empty_slot)} + "가 아직 선택되지 않았습니다.
+              """
+          elif userText.strip() == "아니오":
+            app.ask_veg = False
+            app.confirm_veg = False
+    elif empty_slot:
         message = ", ".join(empty_slot) + "가 아직 선택되지 않았습니다."
     else:
         # 빈 슬롯이 없을때
@@ -223,6 +247,8 @@ def get_bot_response():
                 "sauce": None,
                 "vegetable": None,
             }
+            app.ask_veg = False
+            app.confirm_veg = False
         else:
             order = []
             for k, v in app.slot_dict.items():
