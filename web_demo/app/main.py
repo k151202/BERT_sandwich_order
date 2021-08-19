@@ -177,22 +177,7 @@ def get_bot_response():
 
     # 채소 슬롯이 비었을 때
     if "제외할 채소" in empty_slot:
-        if not app.ask_veg:
-            message = "안 드시는 채소를 선택해주세요."
-            app.ask_veg = True
-        else:
-            if not app.confirm_veg:
-                message = "선택한 채소가 없습니다. 채소는 다 넣어드릴까요?\n(예/아니오)"
-                app.confirm_veg = True
-            else:
-                if userText.strip() == "예":
-                    message = f"""
-              채소는 다 넣어드리겠습니다.
-              {", ".join(empty_slot)} + "가 아직 선택되지 않았습니다.
-              """
-                elif userText.strip() == "아니오":
-                    app.ask_veg = False
-                    app.confirm_veg = False
+        message = veg_msg(app, userText)
     elif empty_slot:
         message = ", ".join(empty_slot) + "가 아직 선택되지 않았습니다."
     else:
@@ -202,34 +187,61 @@ def get_bot_response():
         elif userText.strip() == "아니오":
             message = "알겠습니다. 다시 주문해주세요."
             # 재주문을 위해 슬롯 초기화
-            app.slot_dict = {
-                "sandwich": [],
-                "length": [],
-                "bread": [],
-                "cheese": [],
-                "sauce": [],
-                "vegetable": [],
-            }
-            app.ask_veg = False
-            app.confirm_veg = False
+            init_app(app)
         else:
-            order = []
-            for k, v in app.slot_dict.items():
-                try:
-                    if len(v) == 1:
-                        order.append(f"{menu[k]}: {v[0]}")
-                    else:
-                        order.append(f"{menu[k]}: {', '.join(v)}")
-                except:
-                    order.append(f"{menu[k]}: {None}")
-            order = ", ".join(order)
+            message = check_order_msg(app, menu)
+            
+    return message
 
-            message = f"""
-                주문 확인하겠습니다.. 
-                ==================
-                {order}
-                ===================
-                이대로 주문 완료하시겠습니까? (예 or 아니오)
-                """
+def check_order_msg(app, menu):
+    order = []
+    for k, v in app.slot_dict.items():
+        try:
+            if len(v) == 1:
+                order.append(f"{menu[k]}: {v[0]}")
+            else:
+                order.append(f"{menu[k]}: {', '.join(v)}")
+        except:
+            order.append(f"{menu[k]}: {None}")
+    order = "\n".join(order)
 
+    message = f"""
+        주문 확인하겠습니다.
+        ===================
+        {order}
+        ===================
+        이대로 주문 완료하시겠습니까? (예 or 아니오)
+        """
+
+    return message
+
+def init_app(app):
+    app.slot_dict = {
+        "sandwich": [],
+        "length": [],
+        "bread": [],
+        "cheese": [],
+        "sauce": [],
+        "vegetable": [],
+    }
+    app.ask_veg = False
+    app.confirm_veg = False
+
+def veg_msg(app, userText):
+    if not app.ask_veg:
+        message = "안 드시는 채소를 선택해주세요."
+        app.ask_veg = True
+    else:
+        if not app.confirm_veg:
+            message = "선택한 채소가 없습니다. 채소는 다 넣어드릴까요?\n(예/아니오)"
+            app.confirm_veg = True
+        else:
+            if userText.strip() == "예":
+                message = f"""
+          채소는 다 넣어드리겠습니다.
+          {", ".join(empty_slot)} + "가 아직 선택되지 않았습니다.
+          """
+            elif userText.strip() == "아니오":
+                app.ask_veg = False
+                app.confirm_veg = False
     return message
