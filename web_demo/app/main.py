@@ -250,7 +250,7 @@ def check_order_msg(app, menu):
         주문 확인하겠습니다.<br />
         ===================<br />
         {order}
-        ===================<br />
+        <br />===================<br />
         이대로 주문 완료하시겠습니까? (예 or 아니오)
         """
 
@@ -269,8 +269,8 @@ def init_app(app):
     app.confirm_veg = False
 
 def veg_msg(app, userText):
+    message = "안 드시는 채소를 선택해주세요."
     if not app.ask_veg:
-        message = "안 드시는 채소를 선택해주세요."
         app.ask_veg = True
     else:
         if not app.confirm_veg:
