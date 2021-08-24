@@ -144,7 +144,6 @@ def home():
 
     return render_template("index.html")
 
-
 @app.route("/get")
 def get_bot_response():
     userText = request.args.get("msg").strip()  # 사용자가 입력한 문장
@@ -152,7 +151,7 @@ def get_bot_response():
     if userText[0] == "!":
         try:
             li = cmds[userText[1:]]
-            message = "\n".join(li)
+            message = "<br />\n".join(li)
         except:
             message = "입력한 명령어가 존재하지 않습니다."
         
@@ -245,13 +244,13 @@ def check_order_msg(app, menu):
                 order.append(f"{menu[k]}: {', '.join(v)}")
         except:
             order.append(f"{menu[k]}: {None}")
-    order = "\n".join(order)
+    order = "<br />\n".join(order)
 
     message = f"""
-        주문 확인하겠습니다.
-        ===================
+        주문 확인하겠습니다.<br />
+        ===================<br />
         {order}
-        ===================
+        ===================<br />
         이대로 주문 완료하시겠습니까? (예 or 아니오)
         """
 
@@ -280,7 +279,7 @@ def veg_msg(app, userText):
         else:
             if userText.strip() == "예":
                 message = f"""
-                    채소는 다 넣어드리겠습니다.
+                    채소는 다 넣어드리겠습니다.<br />
                     {", ".join(empty_slot)} + "가 아직 선택되지 않았습니다.
                     """
             elif userText.strip() == "아니오":
