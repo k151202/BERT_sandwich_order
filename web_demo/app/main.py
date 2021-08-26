@@ -204,19 +204,19 @@ def get_bot_response():
     else:
         # 빈 슬롯이 없을때
         if not app.ask_oven:
-            if userText.strip() == "예":
+            if userText.strip().startswith("예"):
                 message = "오븐에 데워드릴까요?(예/아니오)"
                 app.ask_oven = True
-            elif userText.strip() == "아니오":
+            elif userText.strip().startswith("아니오"):
                 message = "알겠습니다. 다시 주문해주세요."
                 # 재주문을 위해 슬롯 초기화
                 init_app(app)
             else:
                 message = check_order_msg(app, menu)
         else:
-            if userText.strip() == "예":
+            if userText.strip().startswith("예"):
                 app.oven = True
-            elif userText.strip() == "아니오":
+            elif userText.strip().startswith("아니오"):
                 app.oven = False
             message = "감사합니다. 주문이 완료되었습니다!"
   
@@ -277,12 +277,12 @@ def veg_msg(app, userText):
             message = "선택한 채소가 없습니다. 채소는 다 넣어드릴까요?\n(예/아니오)"
             app.confirm_veg = True
         else:
-            if userText.strip() == "예":
+            if userText.strip().startswith("예"):
                 message = f"""
                     채소는 다 넣어드리겠습니다.<br />
                     {", ".join(empty_slot)} + "가 아직 선택되지 않았습니다.
                     """
-            elif userText.strip() == "아니오":
+            elif userText.strip().startswith("아니오"):
                 app.ask_veg = False
                 app.confirm_veg = False
     return message
