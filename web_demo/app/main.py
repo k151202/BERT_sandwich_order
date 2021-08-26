@@ -244,7 +244,7 @@ def check_order_msg(app, menu):
                 order.append(f"{menu[k]}: {', '.join(v)}")
         except:
             order.append(f"{menu[k]}: {None}")
-    order = "<br />\n".join(order)
+    order = "<br />\n".join(set(order))
 
     message = f"""
         주문 확인하겠습니다.<br />
